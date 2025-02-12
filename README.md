@@ -28,9 +28,9 @@ The full dataset contains ***26,000+ images***, making it too large for GitHub.
 The dataset is hosted on ***Google Drive*** and ***Kaggle***.
 
 - 📥 [Google Drive Download](https://drive.google.com/drive/folders/1uJJg90lROdUhVUtHwYoLNDvcnlmB5Gmz?usp=drive_link)
-- 📥 [Kaggle Dataset](YOUR_KAGGLE_LINK)
 
 To download and extract it, run:
 ```bash
-wget -O dataset.zip "YOUR_DOWNLOAD_LINK"
-unzip dataset.zip -d data/
+pip install gdown
+gdown --folder https://drive.google.com/drive/folders/1uJJg90lROdUhVUtHwYoLNDvcnlmB5Gmz
+
