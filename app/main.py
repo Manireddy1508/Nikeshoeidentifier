@@ -39,6 +39,11 @@ def home():
     return {"message": "Welcome to the Nike Shoe Classifier API!"}
 
 # Detect Render-assigned PORT dynamically
+import os
+import uvicorn
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Default to 8000 for local testing
+    port = int(os.environ.get("PORT", 8000))  # Default to 8000 if $PORT is not set
+    print(f"🔥 Starting API on Port: {port}")  # Debug print
     uvicorn.run(app, host="0.0.0.0", port=port)
+
