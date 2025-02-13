@@ -1,21 +1,34 @@
-import tensorflow as tf
 import os
+import numpy as np
+from tensorflow.keras.models import load_model
+from PIL import Image
 
+# Define model path dynamically
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get current directory
-MODEL_PATH = os.path.join(BASE_DIR, "nike_shoe_classifier.h5")  # Relative path
+MODEL_PATH = os.path.join(BASE_DIR, "nike_shoe_classifier.h5")  # Model in `app/` folder
 
+# Load the trained model
+model = load_model(MODEL_PATH)
 
 def load_model_and_predict(image):
-    """Load model and make a prediction"""
-    model = tf.keras.models.load_model(MODEL_PATH)
-    
-    # Preprocess image
-    img = image.resize((224, 224))
-    img = tf.keras.preprocessing.image.img_to_array(img) / 255.0
-    img = tf.expand_dims(img, axis=0)
+    """
+    Preprocess image and make predictions using the model.
+    """
+    try:
+        image = image.resize((224, 224))  # Resize to match training size
+        image = np.array(image) / 255.0  # Normalize pixel values (0-1)
+        
+        print(f"✅ Image Shape Before Reshaping: {image.shape}")  # Debugging
 
-    # Get prediction
-    prediction = model.predict(img)
-    
-    return "Nike" if prediction[0][0] < 0.5 else "Other"
+        image = image.reshape(1, 224, 224, 3)  # Reshape for model input
 
+        print(f"✅ Image Shape After Reshaping: {image.shape}")  # Debugging
+
+        prediction = model.predict(image)[0][0]  # Get prediction
+
+        print(f"✅ Model Prediction Output: {prediction}")  # Debugging
+
+        return "Nike" if prediction < 0.5 else "Other"
+
+    except Exception as e:
+        return f"Error in prediction: {str(e)}"

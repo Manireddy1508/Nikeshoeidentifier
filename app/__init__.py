@@ -1,4 +1,1 @@
-# app/__init__.py
-"""
-Nike Shoe Classifier API - FastAPI
-"""
+# Required to make `app/` a package
