@@ -3,6 +3,8 @@ from app.model import load_model_and_predict
 from app.utils import is_image_valid
 import io
 from PIL import Image
+import os
+import uvicorn  # Import uvicorn to run the app
 
 # Initialize FastAPI app
 app = FastAPI(title="Nike Shoe Classifier API")
@@ -35,3 +37,8 @@ def home():
     Root endpoint - Health check.
     """
     return {"message": "Welcome to the Nike Shoe Classifier API!"}
+
+# Detect Render-assigned PORT dynamically
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Default to 8000 for local testing
+    uvicorn.run(app, host="0.0.0.0", port=port)
