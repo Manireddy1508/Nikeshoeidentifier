@@ -5,6 +5,13 @@ import io
 from PIL import Image
 import os
 import uvicorn  # Import uvicorn to run the app
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
+
+# Add Middleware to handle large requests
+app.add_middleware(GZipMiddleware, minimum_size=1000)  # Compress responses
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])  # Allow all hosts
+
 
 # Initialize FastAPI app
 app = FastAPI(title="Nike Shoe Classifier API")
@@ -39,11 +46,13 @@ def home():
     return {"message": "Welcome to the Nike Shoe Classifier API!"}
 
 # Detect Render-assigned PORT dynamically
-import os
-import uvicorn
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Default to 8000 if $PORT is not set
-    print(f"🔥 Starting API on Port: {port}")  # Debug print
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    port = os.environ.get("PORT")  # Get Render's assigned port
+    print(f"🔥 Render Assigned PORT: {port}")  # Print it to logs
 
+    if not port:
+        port = 8000  # Default to 8000 if $PORT is not found
+        print("⚠️ Warning: No $PORT found, defaulting to 8000")
+
+    uvicorn.run(app, host="0.0.0.0", port=int(port))
