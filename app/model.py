@@ -1,7 +1,9 @@
 import tensorflow as tf
 import os
 
-MODEL_PATH = "app/nike_shoe_classifier.h5"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get current directory
+MODEL_PATH = os.path.join(BASE_DIR, "../Model/nike_shoe_classifier.h5")  # Relative path
+
 
 def load_model_and_predict(image):
     """Load model and make a prediction"""
