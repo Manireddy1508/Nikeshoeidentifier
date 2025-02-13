@@ -8,13 +8,14 @@ import uvicorn  # Import uvicorn to run the app
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
+
+# Initialize FastAPI app
+app = FastAPI(title="Nike Shoe Classifier API")
+
 # Add Middleware to handle large requests
 app.add_middleware(GZipMiddleware, minimum_size=1000)  # Compress responses
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])  # Allow all hosts
 
-
-# Initialize FastAPI app
-app = FastAPI(title="Nike Shoe Classifier API")
 
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
