@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nike-classifier
+    runtime: python
+    region: oregon
+    plan: free
+    envVars:
+      - key: MODEL_PATH
+        value: "Model/nike_shoe_classifier.h5"
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
+
