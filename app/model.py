@@ -3,7 +3,8 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from PIL import Image
 
-MODEL_PATH = "/app/nike_shoe_classifier.h5"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get the current directory
+MODEL_PATH = os.path.join(BASE_DIR, "nike_shoe_classifier.h5")
 
 
 # Load the trained model
