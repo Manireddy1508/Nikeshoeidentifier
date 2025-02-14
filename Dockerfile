@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-COPY nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
+COPY app/nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
 
 RUN pip install -r requirements.txt
 
