@@ -7,7 +7,7 @@ import io
 from PIL import Image
 
 # Initialize FastAPI app
-app = FastAPI(title="Nike Shoe Classifier API")
+app = FastAPI()
 
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
@@ -35,7 +35,6 @@ def home():
 
 # Cloud Run expects the app to listen on PORT=8080
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # Default to 8080
-    print(f" Running on port {port}")  # Debugging line
+    port = int(os.environ.get("PORT", 8080))  # Use Cloud Run PORT
     uvicorn.run(app, host="0.0.0.0", port=port)
 
