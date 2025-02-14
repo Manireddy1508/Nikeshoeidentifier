@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-COPY app/nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
+COPY nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
 
 RUN pip install --no-cache-dir -r requirements.txt
 
