@@ -6,7 +6,7 @@ COPY . /app
 
 COPY app/nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PORT=8080
 EXPOSE 8080
