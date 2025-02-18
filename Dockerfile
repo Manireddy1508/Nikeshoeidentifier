@@ -1,27 +1,22 @@
-# Use TensorFlow base image
-FROM tensorflow/tensorflow:2.14.0
+# Use an official lightweight Python runtime
+FROM python:3.9
 
-# Install system dependencies for OpenCV
-RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy application files
-COPY . /app
+# Ensure Python recognizes the app directory as a module
+ENV PYTHONPATH=/app
 
-# Explicitly copy the model file
-COPY app/nike_shoe_classifier.h5 /app/nike_shoe_classifier.h5
+# Copy the project files
+COPY ./app /app
+COPY requirements.txt /app/requirements.txt
 
-# Install Python dependencies
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the application port
+# Expose the port Flask runs on
 EXPOSE 8080
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Run the Flask app
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+
