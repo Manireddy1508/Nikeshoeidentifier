@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from PIL import Image, UnidentifiedImageError
 
-def is_image_valid(image, min_resolution=(50, 50), blur_threshold=100):
+def is_image_valid(image, min_resolution=(100, 100), blur_threshold=50):
     """
     Validate the uploaded image for resolution and blurriness.
     """

@@ -1,14 +1,18 @@
 import os
 import numpy as np
+import tensorflow as tf
 from tensorflow.keras.models import load_model
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from PIL import Image
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get the current directory
-MODEL_PATH = os.path.join(BASE_DIR, "nike_shoe_classifier.h5")
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "nikeshoeornotshoe.h5")
 
 # Load the trained model
 model = load_model(MODEL_PATH)
+
+# Class labels
+class_labels = ["Nike", "Other", "Non-Shoe"]
 
 def load_model_and_predict(image):
     """
@@ -16,19 +20,19 @@ def load_model_and_predict(image):
     """
     try:
         image = image.resize((224, 224))  # Resize to match training size
-        image = np.array(image) / 255.0  # Normalize pixel values (0-1)
+        image = np.array(image)  # Convert to numpy array
+        image = np.expand_dims(image, axis=0)  # Add batch dimension
+        image = preprocess_input(image)  # Apply MobileNetV2 preprocessing
         
-        print(f"✅ Image Shape Before Reshaping: {image.shape}")  # Debugging
-
-        image = image.reshape(1, 224, 224, 3)  # Reshape for model input
-
-        print(f"✅ Image Shape After Reshaping: {image.shape}")  # Debugging
-
-        prediction = model.predict(image)[0][0]  # Get prediction
-
-        print(f"✅ Model Prediction Output: {prediction}")  # Debugging
-
-        return "Nike" if prediction < 0.5 else "Other"
+        prediction = model.predict(image)[0]  # Get predictions
+        predicted_class = np.argmax(prediction)  # Get class with highest confidence
+        confidence_scores = prediction.tolist()  # Convert predictions to list
+        
+        return {
+            "predicted_class": class_labels[predicted_class],
+            "confidence_scores": confidence_scores
+        }
 
     except Exception as e:
-        return f"Error in prediction: {str(e)}"
+        return {"error": str(e)}
+

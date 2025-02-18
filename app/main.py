@@ -1,8 +1,8 @@
 import os
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from app.model import load_model_and_predict
-from app.utils import is_image_valid
+from model import load_model_and_predict
+from utils import is_image_valid
 import io
 from PIL import Image
 
@@ -23,7 +23,7 @@ async def predict(file: UploadFile = File(...)):
 
         # Get model prediction
         prediction = load_model_and_predict(image)
-        return {"prediction": prediction}
+        return {"filename": file.filename, "prediction": prediction}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -31,10 +31,9 @@ async def predict(file: UploadFile = File(...)):
 @app.get("/")
 def home():
     """Root endpoint - Health check."""
-    return {"message": "Welcome to the Nike Shoe Classifier API!"}
+    return {"message": "Welcome to the Sneaker Classification API!"}
 
 # Cloud Run expects the app to listen on PORT=8080
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))  # Use Cloud Run PORT
     uvicorn.run(app, host="0.0.0.0", port=port)
-

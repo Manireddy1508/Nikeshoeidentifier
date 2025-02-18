@@ -1,1 +1,1 @@
-# Required to make `app/` a package
+# Initializes the FastAPI app as a package
