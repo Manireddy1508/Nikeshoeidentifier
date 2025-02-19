@@ -61,6 +61,28 @@ files = {"file": open("test_shoe.jpg", "rb")}
 response = requests.post(url, files=files)
 print(response.json())
 ```
+### 📜 ***How to Use the API
+** 1️⃣ Open Swagger UI for Interactive API Testing
+-Visit:
+`https://nike-classifier-xxxxxx.a.run.app/docs`
+Upload an image
+Click "Execute"
+View the classification result
+
+** 2️⃣ Test API Using cURL
+
+-Run the following command:
+
+`curl -X POST -F "file=@/path/to/image.jpg" \
+     https://nike-classifier-xxxxxx.a.run.app/predict`
+
+** 3️⃣ Use the API in a Python Script
+
+`import requests
+url = "https://nike-classifier-xxxxxx.a.run.app/predict"
+files = {"file": open("/path/to/image.jpg", "rb")}
+response = requests.post(url, files=files)
+print(response.json())  # {'class': 'Nike', 'confidence': [[0.89, 0.07, 0.04]]}`
 
 ---
 
