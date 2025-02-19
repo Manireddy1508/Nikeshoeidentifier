@@ -56,7 +56,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000
 - To test with an image:
 ```python
 import requests
-url = "https://your-cloud-run-url/predict/"
+url = "https://nike-classifier-779080697580.us-central1.run.app/docs"
 files = {"file": open("test_shoe.jpg", "rb")}
 response = requests.post(url, files=files)
 print(response.json())
@@ -64,8 +64,8 @@ print(response.json())
 ### 📜 ***How to Use the API***
 ### 1️⃣ ***Open Swagger UI for Interactive API Testing***
 -Visit:
-`https://nike-classifier-xxxxxx.a.run.app/docs`
-Upload an image
+`https://nike-classifier-779080697580.us-central1.run.app/docs`
+upload an image
 Click "Execute"
 View the classification result
 
@@ -74,12 +74,12 @@ View the classification result
 -Run the following command:
 
 `curl -X POST -F "file=@/path/to/image.jpg" \
-     https://nike-classifier-xxxxxx.a.run.app/predict`
+     https://nike-classifier-779080697580.us-central1.run.app/docs`
 
 ### 3️⃣ ***Use the API in a Python Script***
 
 `import requests
-url = "https://nike-classifier-xxxxxx.a.run.app/predict"
+url = "https://nike-classifier-779080697580.us-central1.run.app/docs"
 files = {"file": open("/path/to/image.jpg", "rb")}
 response = requests.post(url, files=files)
 print(response.json())  # {'class': 'Nike', 'confidence': [[0.89, 0.07, 0.04]]}`
