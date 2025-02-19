@@ -69,7 +69,7 @@ Upload an image
 Click "Execute"
 View the classification result
 
-** 2️⃣ ** Test API Using cURL **
+ 2️⃣ ** Test API Using cURL **
 
 -Run the following command:
 
